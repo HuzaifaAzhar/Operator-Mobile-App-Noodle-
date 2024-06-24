@@ -10,8 +10,8 @@ const UpdateUserScreen = ({ route, navigation }) => {
 
   const updateUser = async () => {
     try {
-      await axios.put(`http://localhost:3000/user/${user.id}`, { name, email });
-      navigation.navigate('Home');
+      await axios.put(`http://192.168.0.104:3000/user/${user.id}`, { name, email });
+      navigation.navigate('HomeList');
     } catch (error) {
       console.error(error);
     }

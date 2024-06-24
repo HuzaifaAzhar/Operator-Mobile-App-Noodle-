@@ -9,8 +9,8 @@ const AddUserScreen = ({ navigation }) => {
 
   const addUser = async () => {
     try {
-      await axios.post('http://localhost:3000/user', { name, email });
-      navigation.navigate('Home');
+      await axios.post('http://192.168.0.104:3000/user', { name, email });
+      navigation.navigate('HomeList');
     } catch (error) {
       console.error(error);
     }

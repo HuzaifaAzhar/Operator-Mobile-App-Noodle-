@@ -1,30 +1,40 @@
-// screens/HomeScreen.js
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity } from 'react-native';
+// screens/HomeList.js (assuming this is your Home screen component)
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, FlatList } from 'react-native';
 import axios from 'axios';
+import { useFocusEffect } from '@react-navigation/native';
 
-const HomeScreen = ({ navigation }) => {
+const HomeList = ({ navigation }) => {
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
+  // Function to fetch users
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/users');
+      const response = await axios.get('http://192.168.0.104:3000/users'); // Use your server's IP
       setUsers(response.data);
     } catch (error) {
-      console.error(error);
+      console.error('Axios Error:', error);
     }
   };
 
+  // Fetch users on component mount and whenever the screen is focused
+  useEffect(() => {
+    fetchUsers(); // Fetch users on component mount
+  }, []);
+
+  // Use useFocusEffect to refetch users whenever the screen gains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUsers(); // Fetch users whenever screen gains focus
+    }, [])
+  );
+
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/user/${id}`);
-      fetchUsers();
+      await axios.delete(`http://192.168.0.104:3000/user/${id}`); // Use your server's IP
+      fetchUsers(); // After deletion, fetch updated user list
     } catch (error) {
-      console.error(error);
+      console.error('Axios Error:', error);
     }
   };
 
@@ -37,6 +47,7 @@ const HomeScreen = ({ navigation }) => {
           <View>
             <Text>{item.name} - {item.email}</Text>
             <Button title="Delete" onPress={() => deleteUser(item.id)} />
+            {/* Optional: Add update button */}
             <Button title="Update" onPress={() => navigation.navigate('UpdateUser', { user: item })} />
           </View>
         )}
@@ -45,4 +56,4 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+export default HomeList;
