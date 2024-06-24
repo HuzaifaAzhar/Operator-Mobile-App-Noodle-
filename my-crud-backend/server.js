@@ -7,12 +7,12 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-// MySQL connection configuration
+// MySQL connection
 const db = mysql.createConnection({
-    host: '127.0.0.1', // The hostname as shown in your details
-    user: 'root',      // The username as shown in your details
-    password: 'root',      // The password (if any, otherwise leave it as an empty string)
-    database: 'testcrud' // The database name you want to use
+    host: '127.0.0.1', 
+    user: 'root',
+    password: 'root',      
+    database: 'testcrud' // The database name
 });
 
 db.connect(err => {
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the CRUD API');
 });
 
-// Create an entity (for example, a user)
+// Create a user
 app.post('/user', (req, res) => {
   let newUser = { name: req.body.name, email: req.body.email };
   let sql = 'INSERT INTO users SET ?';
