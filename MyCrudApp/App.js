@@ -1,31 +1,22 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import StockReplenishment from './screens/StockReplenishment';
+import MachineOperationTesting from './screens/MachineOperationTesting';
+import MonitoringOps from './screens/MonitoringOps';
+// Import other screens...
 
-import HomeScreen from './screens/HomeScreen';
-import AddUserScreen from './screens/AddUserScreen';
-import UpdateUserScreen from './screens/UpdateUserScreen';
-
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-
-function HomeStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="HomeList" component={HomeScreen} />
-      <Stack.Screen name="UpdateUser" component={UpdateUserScreen} />
-    </Stack.Navigator>
-  );
-}
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Add User" component={AddUserScreen} />
-      </Tab.Navigator>
+      <Drawer.Navigator initialRouteName="StockReplenishment">
+        <Drawer.Screen name="Stock Replenishment" component={StockReplenishment} />
+        <Drawer.Screen name="Machine Operation Testing" component={MachineOperationTesting} />
+        <Drawer.Screen name="Monitoring OPS" component={MonitoringOps} />
+        {/* Add other screens here */}
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
